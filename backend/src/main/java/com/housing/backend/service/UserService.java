@@ -29,7 +29,7 @@ public class UserService {
     // Fetch all users and return them as DTOs
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(this::convertToDTO)
+                .map(user -> convertToDTO(user))
                 .collect(Collectors.toList());
     }
 
