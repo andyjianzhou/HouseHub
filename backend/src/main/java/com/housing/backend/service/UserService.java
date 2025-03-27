@@ -5,6 +5,8 @@ import com.housing.backend.dto.UserDTO;
 import com.housing.backend.dto.UserLoginDTO;
 import com.housing.backend.model.User;
 import com.housing.backend.repository.UserRepository;
+import com.housing.backend.security.JwtUtil;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();  // Encrypts passwords
+        this.jwtUtil = jwtUtil;
     }
 
     // Fetch all users and return them as DTOs
@@ -54,10 +58,11 @@ public class UserService {
     }
 
     // Validate user login
-    public boolean validateUserLogin(UserLoginDTO userLoginDTO) {
+    public String validateUserLogin(UserLoginDTO userLoginDTO) {
         return userRepository.findByEmail(userLoginDTO.getEmail())
-                .map(user -> passwordEncoder.matches(user.getPassword(), user.getPassword()))
-                .orElse(false);
+                .filter(user -> passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword()))
+                .map(user -> jwtUtil.generateToken(user.getEmail())) // Return JWT on success
+                .orElse(null);
     }
 
     public boolean updateUser(Long id, UserDTO userDTO) {

@@ -9,6 +9,7 @@ import com.housing.backend.dto.UserLoginDTO;
 import com.housing.backend.service.UserService;
 
 import java.util.List;
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/users")
@@ -42,8 +43,10 @@ public class UserController {
 
     // User login (Using UserDTO instead)
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
-        boolean success = userService.validateUserLogin(userLoginDTO);
-        return success ? ResponseEntity.ok("Login successful") : ResponseEntity.status(401).body("Invalid email or password");
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
+        String token = userService.validateUserLogin(userLoginDTO);
+        return (token != null) 
+            ? ResponseEntity.ok().body(Collections.singletonMap("token", token))
+            : ResponseEntity.status(401).body("Invalid email or password");
     }
 }
