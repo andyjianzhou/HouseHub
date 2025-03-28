@@ -1,5 +1,6 @@
 package com.housing.backend.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,8 +9,9 @@ import com.housing.backend.dto.UserDTO;
 import com.housing.backend.dto.UserLoginDTO;
 import com.housing.backend.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -45,8 +47,12 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody UserLoginDTO userLoginDTO) {
         String token = userService.validateUserLogin(userLoginDTO);
-        return (token != null) 
-            ? ResponseEntity.ok().body(Collections.singletonMap("token", token))
-            : ResponseEntity.status(401).body("Invalid email or password");
+
+        if (token != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("token", token);
+            return ResponseEntity.ok().body(response);
+        }
+        return ResponseEntity.status(401).body("Invalid email or password");
     }
 }
