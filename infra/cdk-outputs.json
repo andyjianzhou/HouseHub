@@ -1,0 +1,8 @@
+{
+  "HouseHubDevStack": {
+    "BucketName": "househubdevstack-mybucketf68f3ff0-wlndy5iyeyst",
+    "DatabasePort": "5432",
+    "EC2PublicIP": "35.173.203.164",
+    "DatabaseEndpoint": "househubdevstack-devdatabase2064a226-odmookm1o5ey.cy1qgkmicrcj.us-east-1.rds.amazonaws.com"
+  }
+}
