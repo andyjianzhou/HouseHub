@@ -17,17 +17,22 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)  // Unique & required
+    @NonNull
     private String email;
 
     @Column(nullable = false)
+    @NonNull
     private String password;
 
     @Column(nullable = false)
+    @NonNull
     private String firstName;
 
     @Column(nullable = false)
+    @NonNull
     private String lastName;
 
     @Column(nullable = false, updatable = false)
+    @NonNull
     private LocalDateTime createdAt = LocalDateTime.now();  // Timestamp
 }
