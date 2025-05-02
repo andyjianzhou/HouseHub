@@ -37,6 +37,7 @@ public class UserController {
     }
 
     // Register a new user (Using UserDTO instead)
+    // @RequestBody converts JSON to Java object which in this case is UserCreateDTO
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody UserCreateDTO UserCreateDTO) {
         boolean created = userService.createUser(UserCreateDTO);
