@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.housing.backend.dto.UserCreateDTO;
 import com.housing.backend.dto.UserDTO;
 import com.housing.backend.dto.UserLoginDTO;
-import com.housing.backend.service.UserService;
+import com.housing.backend.service.IUserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.Map;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserService userService;
+    private final IUserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 

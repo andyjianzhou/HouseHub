@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service // Marks this class as a service component, meaning it holds business logic
 // and can be injected into other components.
-public class UserService {
+public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
